@@ -1,0 +1,61 @@
+1. How to prepare the data?
+	(1) Download the file from website of LIBSVM data sets.
+		http://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets
+
+2. How to compile the code (We use Method2 as an example)?
+	(1) cd ./Method2
+	(2) type ``make''
+
+3. Usage
+   (1) For Method1, Method2, Method2-con, Method2-g, and Subsampled, you can use ``./train -s 2 -x 10 -y 50 -z 20 data_name''
+	[1] -s: solver name. For exmaple, ``-s 2'' is using LR.
+	[2] -x: max ``outer'' iteration.
+	[3] -y: max number of ``CG iteration''.
+	[4] -z: number of split of training data set for subsampling Hessian. For example, ``-z 20'' is using 1/20 (5%) data to derive subsampled Hessian. 
+   (2) For Method2-sg, you can use ``./train -s 2 -x 10 -y 50 -g 2 -z 20 data_name''
+	[1] -g: number of split of training data to derive sampled gradient. For example, ``-g 2'' is using 1/2 (50%) data to derive sampled gradient.
+		Notice that ``-g'' cooperate with ``-z''. For example, ``-g 2 -z 20'' means that using 1/2 (50%) data to get sampled gradient and then using 1/10 (0.5*0.1 = 5%) data
+		which is from the 1/2 (50%) data using for gradient to get the subsampled Hessian.
+   (3) For *-maxent, you can use ``./train -s 2 -x 10 -y 50 -z 20 train_data_name test_data_name''
+	[1] Notice that we also provide the testing accuracy.Usage: train [options] training_set_file [model_file]
+
+
+options:
+-s type : set type of solver (default 1)
+  for multi-class classification
+	 0 -- L2-regularized logistic regression (primal)
+	 1 -- L2-regularized L2-loss support vector classification (dual)
+	 2 -- L2-regularized L2-loss support vector classification (primal)
+	 3 -- L2-regularized L1-loss support vector classification (dual)
+	 4 -- support vector classification by Crammer and Singer
+	 5 -- L1-regularized L2-loss support vector classification
+	 6 -- L1-regularized logistic regression
+	 7 -- L2-regularized logistic regression (dual)
+  for regression
+	11 -- L2-regularized L2-loss support vector regression (primal)
+	12 -- L2-regularized L2-loss support vector regression (dual)
+	13 -- L2-regularized L1-loss support vector regression (dual)
+-c cost : set the parameter C (default 1)
+-p epsilon : set the epsilon in loss function of SVR (default 0.1)
+-e epsilon : set tolerance of termination criterion
+	-s 0 and 2
+		|f'(w)|_2 <= eps*min(pos,neg)/l*|f'(w0)|_2,
+		where f is the primal function and pos/neg are # of
+		positive/negative data (default 0.01)
+	-s 11
+		|f'(w)|_2 <= eps*|f'(w0)|_2 (default 0.001)
+	-s 1, 3, 4, and 7
+		Dual maximal violation <= eps; similar to libsvm (default 0.1)
+	-s 5 and 6
+		|f'(w)|_1 <= eps*min(pos,neg)/l*|f'(w0)|_1,
+		where f is the primal function (default 0.01)
+	-s 12 and 13
+		|f'(alpha)|_1 <= eps |f'(alpha0)|,
+		where f is the dual function (default 0.1)
+-x : maximum number of outer iteration (solver type 0 and 2)
+-y : maximum number of CG iteration (solver type 0 and 2)
+-z : sampling percentage: l/|S_k| (solver type 0 and 2)
+-B bias : if bias >= 0, instance x becomes [x; bias]; if < 0, no bias term added (default -1)
+-wi weight: weights adjust the parameter C of different classes (see README for details)
+-v n: n-fold cross validation mode
+-q : quiet mode (no outputs)

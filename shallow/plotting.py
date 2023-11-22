@@ -18,7 +18,7 @@ def plot_loss(data_name):
     plt.xlim(1e-2, 1e2)
     plt.ylim(1e-5, 1e4)
 
-    plt.title(f"Function Value vs Time (seconds), {percentage}%, \n Outer Loop iterations = {outer_loop_iterations}, max_CG = {cg_iterations}") 
+    plt.title(f"Function Value vs Time (seconds) for {data_name}, {percentage}%, \n Outer Loop iterations = {outer_loop_iterations}, max_CG = {cg_iterations}") 
 
     for method in methods:
 

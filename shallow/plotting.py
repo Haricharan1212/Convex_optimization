@@ -3,13 +3,11 @@ import os
 import numpy as np
 from matplotlib import pyplot as plt
 
-percentage = 20
-outer_loop_iterations = 100
-cg_iterations = 5
+def plot_loss(data_name, tolerance, percentage = 20, outer_loop_iterations = 100, cg_iterations = 5):
 
-def plot_loss(data_name, tolerance):
+    plt.clf()
 
-    methods = ["Method2", "Method2-g"]
+    methods = ["Method2", "Method2-g", "Subsampled", "Full"]
     os.system(f"mkdir {data_name}_results")    
 
     plt.title(f"Error vs Time (seconds) for {data_name}, {100/percentage}%, \n Outer Loop iterations = {outer_loop_iterations}, max_CG = {cg_iterations}") 
@@ -40,7 +38,8 @@ def plot_loss(data_name, tolerance):
 
         # ax.plot3D(times, num_iterations, function_values)
 
-    methods = ["Our paper (S3)", "Our improvements (S4)"]
+    methods = ["Our paper (S3)", "Our improvements (S4)", "Subsampled (S1)", "Full Hessian"]
+
 
     # ax.set_xlabel('Time (in seconds)')
     # ax.set_ylabel('Number of Iterations')
@@ -90,6 +89,7 @@ def plots_2(data_name, tolerance):
     plt.show()
 
 
-# plots_2("news20.binary", 1e-5)    
-plot_loss("phishing", 1e-5)
-# plot_loss("kdda", 1e-1)
+if __name__ == "__main__":
+    # plots_2("news20.binary", 1e-5)    
+    plot_loss("phishing", 1e-5)
+    # plot_loss("kdda", 1e-1)
